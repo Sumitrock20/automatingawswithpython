@@ -20,8 +20,10 @@ service: notifon-notifier # NOTE: update this with your service name
 provider:
   name: aws
   runtime: python3.6
-  profile: pythonAutomation
+  profile: ${file(../config.${self:provider.stage}.json):notifier.profile}
   region: ap-south-1
+  environment:
+    SLACK_WEBHOOK_URL: ${file(../config.${self:provider.stage}.json):notifier.slack_webhook_url}
 # you can overwrite defaults here
 #  stage: dev
 #  region: us-east-1
@@ -56,8 +58,8 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  post-to-slack:
+    handler: handler.post_to_slack
     events:
       - cloudwatchEvent:
           event:
@@ -67,7 +69,7 @@ functions:
               - "EC2 Instance Launch Successful"
             detail:
               AutoScalingGroupName:
-              - "Notifon Example Group"    
+              - "Notifon Example Group"
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
