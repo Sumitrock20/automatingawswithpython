@@ -21,4 +21,4 @@ webotron has currently following features:
 ###Features
   Notifon currently has the following features:
    
-  
+ - Send notifications to slack when cloudwatch events happen 
