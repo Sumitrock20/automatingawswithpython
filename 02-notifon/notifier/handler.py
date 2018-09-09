@@ -8,5 +8,5 @@ def post_to_slack(event, context):
     data = { "text": slack_message }
     requests.post(slack_webhook_url, json=data)
     #print(slack_webhook_url)
-    #print(event)
+    
     return
